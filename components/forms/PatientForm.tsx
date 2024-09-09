@@ -50,7 +50,7 @@ export enum FormFieldType {
       console.log(userData)
       const user = await createUser(userData) 
       
-      if(user){router.push(`/patients/${user.id}/register`)}
+      if(user){router.push(`/patients/${user.$id}/register`)}
       console.log('user created')
     } catch (error) {
         console.log(error)
