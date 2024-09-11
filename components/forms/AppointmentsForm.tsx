@@ -3,16 +3,13 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { Button } from "@/components/ui/button"
 import {
   Form,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import CustomFormField from "../CustomFormField"
 import SubmitButton from "../SubmitButton"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { createUser } from "@/lib/actions/patients.actions"
 import { FormFieldType } from "./PatientForm"
 import { Doctors } from "@/constants"
 import Image from "next/image"
@@ -20,7 +17,6 @@ import { createAppointment, updateAppointment } from "@/lib/actions/appointments
 import { getAppointmentSchema } from "@/lib/validation"
 import { SelectItem } from "../ui/select"
 import { Appointment } from "@/types/appwrite.types"
-import { newDate } from "react-datepicker/dist/date_utils"
 
 
 
@@ -33,7 +29,7 @@ import { newDate } from "react-datepicker/dist/date_utils"
     patientId: string
     type: "create" | "cancel" | "schedule"
     appointment?: Appointment
-    setOpen: (open: boolean) => void
+    setOpen?: (open: boolean) => void
  }) => {
     const [isLoading, setIsLoading] = useState(false)
     console.log(appointment)

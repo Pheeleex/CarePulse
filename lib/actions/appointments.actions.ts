@@ -25,6 +25,13 @@ export const createAppointment = async (
       ID.unique(),
       appointment
     );
+
+    // SMS Notification
+    const phoneNumber = '+2349074358404'; // Hardcoded phone number
+    const smsMessage = `Greetings from CarePulse. Your appointment has been successfully scheduled for ${formatDateTime(appointment.schedule!).dateTime} with Dr. ${appointment.primaryPhysician}.`;
+
+    await sendSMSNotification(phoneNumber, smsMessage);  // Send SMS
+
     return parseStringify(newAppointment);
   } catch (error) {
     console.error("An error occurred while creating a new appointment:", error);
@@ -108,7 +115,7 @@ export const updateAppointment = async ({
 
     if (!updatedAppointment) throw Error;
 
-    //TODO SMS NOTIFICATION
+    //SMS NOTIFICATION
 
     const smsMessage = `Greetings from CarePulse. ${type === "schedule" ? `Your 
     appointment is confirmed for ${formatDateTime(appointment.schedule!).dateTime} 

@@ -1,10 +1,8 @@
 //import PatientForm from "@/components/forms/patientForm";
 import AppointmentsForm from "@/components/forms/AppointmentsForm";
-import PatientForm from "@/components/forms/PatientForm";
-import { Button } from "@/components/ui/button";
 import { getPatient } from "@/lib/actions/patients.actions";
 import Image from "next/image";
-import Link from "next/link";
+
 
 
 
