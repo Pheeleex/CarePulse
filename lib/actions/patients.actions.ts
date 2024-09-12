@@ -24,22 +24,11 @@ export const createUser = async(user: CreateUserParams)=>{
         return parseStringify(newUser)
     } catch (error: any) {
       console.log("createUser error", error);
-
-      // Handle specific error codes
       if (error?.code === 409) {
-          // Re-throw a custom error message for "User already exists"
-          throw new Error(JSON.stringify({
-              message: "A user with this email or phone number already exists.",
-              code: 409
-          }));
+        throw new Error("A user with this email or phone number already exists.");
       }
-
-      // Throw the error as-is for other cases
-      throw new Error(JSON.stringify({
-          message: error.message || "An unexpected error occurred.",
-          code: error.code || 500
-      }));
-  }
+      throw new Error("An unexpected error occurred.");
+    }
 }
 
 export const getUser = async (userId: string) => {

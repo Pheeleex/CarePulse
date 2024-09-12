@@ -54,17 +54,13 @@ export enum FormFieldType {
       if(user){router.push(`/patients/${user.$id}/register`)}
       console.log('user created')
     } catch (error: any) {
-      // Extract the error message from the Error object
-      let parsedErrorMessage = "An error occurred. Please try again.";
-      try {
-        const parsedError = JSON.parse(error.message); // Parse the error message if it’s in JSON format
-        parsedErrorMessage = parsedError.message || parsedErrorMessage;
-      } catch (parseError) {
-        // Fallback to the original error message if parsing fails
-        parsedErrorMessage = error.message || parsedErrorMessage;
-      }
-      setError(parsedErrorMessage);
       console.log("Error in creating user:", error);
+      // Check for specific error message
+      if (error.message.includes("A user with this email or phone number already exists.")) {
+        setError("A user with this email or phone number already exists.");
+      } else {
+        setError("An unexpected error occurred.");
+      }
       } finally {
           setIsLoading(false);
       }
