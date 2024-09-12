@@ -29,6 +29,7 @@ export enum FormFieldType {
 
  const PatientForm = () => {
     const [isLoading, setIsLoading] = useState(false)
+    const [error, setError] = useState<string | null>(null);
   // 1. Define your form.
   const form = useForm<z.infer<typeof UserFormValidation>>({
     resolver: zodResolver(UserFormValidation),
@@ -52,15 +53,25 @@ export enum FormFieldType {
       
       if(user){router.push(`/patients/${user.$id}/register`)}
       console.log('user created')
-    } catch (error) {
-        console.log(error)
-    }
+    } catch (error: any) {
+      try {
+        const parsedError = JSON.parse(error.message); // Parse the error message if it’s in JSON format
+        setError(parsedError.message || "An error occurred.");
+      } catch (parseError) {
+        setError(error.message || "An error occurred.");
+      }
+      console.log("Error in creating user:", error);
+
+      } finally {
+          setIsLoading(false);
+      }
     
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 space-y-6">
+      {error && <div className="error-message text-red-700 bg-red opacity-4 p-2">{error}</div>}
         <section className="mb-12 space-y-4">
             <h1 className="header">Hi there 👋</h1>
             <p className="text-dark-700">Get started with appointments.</p>
